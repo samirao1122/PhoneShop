@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PhoneVault — Premium Mobile Store</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div id="toast" class="toast"></div>
+
+  <div id="loader" class="loader-overlay">
+    <div class="loader-inner">
+      <div class="loader-ring"></div>
+      <span>PHONEVAULT</span>
+    </div>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-logo" onclick="showPage('home')">
+      <span class="logo-icon">⬡</span>
+      <span class="logo-text">PHONE<strong>VAULT</strong></span>
+    </div>
+    <div class="nav-links" id="navLinks">
+      <a href="#" onclick="showPage('home')" data-page="home">Home</a>
+      <a href="#" onclick="showPage('shop')" data-page="shop">Shop</a>
+      <a href="#" onclick="showPage('wishlist')" data-page="wishlist">Wishlist</a>
+      <a href="#" onclick="showPage('orders')" data-page="orders" id="navOrders" style="display:none">Orders</a>
+      <a href="#" onclick="showPage('admin-panel')" data-page="admin-panel" id="navAdmin" style="display:none">Admin</a>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-btn cart-btn" onclick="showPage('cart')" title="Cart">
+        🛒 <span class="badge" id="cartBadge">0</span>
+      </button>
+      <div id="authBtns">
+        <button class="btn btn-outline" onclick="showModal('loginModal')">Login</button>
+        <button class="btn btn-primary" onclick="showModal('registerModal')">Register</button>
+      </div>
+      <div id="userMenu" style="display:none">
+        <button class="user-avatar" onclick="toggleDropdown()">
+          <span id="userInitial">A</span>
+        </button>
+        <div class="dropdown" id="dropdown">
+          <div class="dropdown-header" id="dropdownName">Ali Hassan</div>
+          <a href="#" onclick="showPage('profile')">My Profile</a>
+          <a href="#" onclick="showPage('orders')">My Orders</a>
+          <a href="#" onclick="showPage('wishlist')">Wishlist</a>
+          <hr/>
+          <a href="#" onclick="logout()" class="danger">Logout</a>
+        </div>
+      </div>
+      <button class="hamburger" onclick="toggleMobileMenu()">☰</button>
+    </div>
+  </nav>
+
+  <!-- HOME PAGE -->
+  <div id="page-home" class="page active">
+    <section class="hero">
+      <div class="hero-bg">
+        <div class="hero-orb hero-orb-1"></div>
+        <div class="hero-orb hero-orb-2"></div>
+        <div class="hero-grid"></div>
+      </div>
+      <div class="hero-content">
+        <div class="hero-badge">NEW ARRIVALS 2025</div>
+        <h1 class="hero-title">NEXT-GEN<br/><span class="hero-accent">PHONES.</span><br/>ZERO COMPROMISE.</h1>
+        <p class="hero-sub">Flagship specs. Street prices. Delivered to your door.</p>
+        <div class="hero-cta">
+          <button class="btn btn-primary btn-lg" onclick="showPage('shop')">Browse Collection</button>
+          <button class="btn btn-ghost btn-lg" onclick="scrollToFeatured()">Featured ↓</button>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><span id="statPhones">0</span><small>Phones</small></div>
+          <div class="stat"><span id="statBrands">0</span><small>Brands</small></div>
+          <div class="stat"><span>24hr</span><small>Delivery</small></div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="phone-mockup">
+          <div class="phone-screen">
+            <div class="screen-notch"></div>
+            <div class="screen-content">
+              <div class="screen-bar"></div>
+              <div class="screen-bar short"></div>
+              <div class="screen-bar medium"></div>
+              <div class="screen-icon-row">
+                <div class="screen-icon"></div>
+                <div class="screen-icon"></div>
+                <div class="screen-icon"></div>
+                <div class="screen-icon"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="brands-strip">
+      <div class="strip-label">TRUSTED BRANDS</div>
+      <div class="brands-scroll" id="brandsScroll"></div>
+    </section>
+
+    <section class="featured-section" id="featuredSection">
+      <div class="section-header">
+        <div class="section-tag">HANDPICKED</div>
+        <h2 class="section-title">Featured Phones</h2>
+        <a href="#" onclick="showPage('shop')" class="see-all">View All →</a>
+      </div>
+      <div class="phones-grid" id="featuredGrid"></div>
+    </section>
+
+    <section class="featured-section">
+      <div class="section-header">
+        <div class="section-tag">FRESH IN</div>
+        <h2 class="section-title">Latest Arrivals</h2>
+        <a href="#" onclick="showPage('shop')" class="see-all">View All →</a>
+      </div>
+      <div class="phones-grid" id="latestGrid"></div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <span class="logo-icon">⬡</span> PHONE<strong>VAULT</strong>
+          <p>Pakistan's premium mobile store</p>
+        </div>
+        <div class="footer-links">
+          <span onclick="showPage('shop')">Shop</span>
+          <span onclick="showPage('cart')">Cart</span>
+          <span onclick="showPage('orders')">Orders</span>
+        </div>
+        <div class="footer-copy">© 2025 PhoneVault. All rights reserved.</div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- SHOP PAGE -->
+  <div id="page-shop" class="page">
+    <div class="shop-layout">
+      <aside class="shop-sidebar" id="shopSidebar">
+        <div class="sidebar-header">
+          <h3>FILTERS</h3>
+          <button class="btn-reset" onclick="resetFilters()">Reset All</button>
+        </div>
+        <div class="filter-group">
+          <div class="filter-label">Search</div>
+          <div class="search-input-wrap">
+            <input type="text" id="searchInput" placeholder="iPhone, Galaxy..." oninput="debounceSearch()" />
+            <span class="search-icon">⌕</span>
+          </div>
+        </div>
+        <div class="filter-group">
+          <div class="filter-label">Brand</div>
+          <div id="brandFilters" class="filter-chips"></div>
+        </div>
+        <div class="filter-group">
+          <div class="filter-label">Category</div>
+          <div id="categoryFilters" class="filter-chips"></div>
+        </div>
+        <div class="filter-group">
+          <div class="filter-label">Price Range (PKR)</div>
+          <div class="price-inputs">
+            <input type="number" id="minPrice" placeholder="Min" onchange="applyFilters()" />
+            <span>—</span>
+            <input type="number" id="maxPrice" placeholder="Max" onchange="applyFilters()" />
+          </div>
+        </div>
+        <div class="filter-group">
+          <div class="filter-label">Condition</div>
+          <div class="filter-chips">
+            <button class="chip active" data-condition="" onclick="selectCondition(this,'')">All</button>
+            <button class="chip" data-condition="new" onclick="selectCondition(this,'new')">New</button>
+            <button class="chip" data-condition="refurbished" onclick="selectCondition(this,'refurbished')">Refurbished</button>
+            <button class="chip" data-condition="used" onclick="selectCondition(this,'used')">Used</button>
+          </div>
+        </div>
+        <div class="filter-group">
+          <label class="toggle-label">
+            <input type="checkbox" id="inStockOnly" onchange="applyFilters()" />
+            <span>In Stock Only</span>
+          </label>
+        </div>
+        <div class="filter-group">
+          <div class="filter-label">Sort By</div>
+          <select id="sortSelect" onchange="applyFilters()">
+            <option value="-created_at">Newest First</option>
+            <option value="price">Price: Low to High</option>
+            <option value="-price">Price: High to Low</option>
+            <option value="name">Name A-Z</option>
+          </select>
+        </div>
+      </aside>
+      <main class="shop-main">
+        <div class="shop-topbar">
+          <div class="results-count"><span id="resultsCount">0</span> phones found</div>
+          <button class="filter-toggle" onclick="toggleSidebar()">⚙ Filters</button>
+        </div>
+        <div class="phones-grid" id="shopGrid"></div>
+        <div class="pagination" id="pagination"></div>
+      </main>
+    </div>
+  </div>
+
+  <!-- PHONE DETAIL PAGE -->
+  <div id="page-detail" class="page">
+    <div class="detail-container" id="detailContainer"></div>
+  </div>
+
+  <!-- CART PAGE -->
+  <div id="page-cart" class="page">
+    <div class="page-header"><h1>YOUR CART</h1></div>
+    <div class="cart-layout">
+      <div class="cart-items" id="cartItems"></div>
+      <div class="cart-summary" id="cartSummary"></div>
+    </div>
+  </div>
+
+  <!-- CHECKOUT PAGE -->
+  <div id="page-checkout" class="page">
+    <div class="page-header"><h1>CHECKOUT</h1></div>
+    <div class="checkout-layout">
+      <div class="checkout-form-wrap">
+        <h3>Shipping Information</h3>
+        <div class="form-grid">
+          <div class="form-group"><label>Full Name *</label><input type="text" id="co_name" placeholder="Ali Hassan" /></div>
+          <div class="form-group"><label>Email *</label><input type="email" id="co_email" placeholder="ali@email.com" /></div>
+          <div class="form-group"><label>Phone Number *</label><input type="text" id="co_phone" placeholder="03001234567" /></div>
+          <div class="form-group"><label>City *</label><input type="text" id="co_city" placeholder="Lahore" /></div>
+          <div class="form-group full"><label>Address *</label><input type="text" id="co_address" placeholder="House #, Street, Area" /></div>
+          <div class="form-group"><label>Postal Code *</label><input type="text" id="co_postal" placeholder="54000" /></div>
+          <div class="form-group"><label>State / Province</label><input type="text" id="co_state" placeholder="Punjab" /></div>
+        </div>
+        <h3>Payment Method</h3>
+        <div class="payment-methods">
+          <label class="payment-option"><input type="radio" name="payment" value="cod" checked /><span>💵 Cash on Delivery</span></label>
+          <label class="payment-option"><input type="radio" name="payment" value="card" /><span>💳 Card Payment</span></label>
+          <label class="payment-option"><input type="radio" name="payment" value="easypaisa" /><span>📱 Easypaisa</span></label>
+          <label class="payment-option"><input type="radio" name="payment" value="jazzcash" /><span>📱 JazzCash</span></label>
+        </div>
+        <div class="form-group">
+          <label>Order Notes (optional)</label>
+          <textarea id="co_notes" rows="3" placeholder="Any special instructions..."></textarea>
+        </div>
+        <button class="btn btn-primary btn-full btn-lg" onclick="placeOrder()">Place Order →</button>
+      </div>
+      <div class="checkout-summary" id="checkoutSummary"></div>
+    </div>
+  </div>
+
+  <!-- ORDERS PAGE -->
+  <div id="page-orders" class="page">
+    <div class="page-header"><h1>MY ORDERS</h1></div>
+    <div class="orders-list" id="ordersList"></div>
+  </div>
+
+  <!-- WISHLIST PAGE -->
+  <div id="page-wishlist" class="page">
+    <div class="page-header"><h1>WISHLIST</h1></div>
+    <div class="phones-grid" id="wishlistGrid"></div>
+  </div>
+
+  <!-- PROFILE PAGE -->
+  <div id="page-profile" class="page">
+    <div class="page-header"><h1>MY PROFILE</h1></div>
+    <div class="profile-layout">
+      <div class="profile-card">
+        <div class="profile-avatar-big" id="profileAvatar">A</div>
+        <h2 id="profileName">User</h2>
+        <p id="profileEmail" class="muted">email@example.com</p>
+        <span class="badge-admin" id="profileBadge" style="display:none">ADMIN</span>
+      </div>
+      <div class="profile-form">
+        <h3>Edit Profile</h3>
+        <div class="form-grid">
+          <div class="form-group"><label>First Name</label><input type="text" id="p_first" placeholder="Ali" /></div>
+          <div class="form-group"><label>Last Name</label><input type="text" id="p_last" placeholder="Hassan" /></div>
+          <div class="form-group"><label>Email</label><input type="email" id="p_email" /></div>
+          <div class="form-group"><label>Phone Number</label><input type="text" id="p_phone" /></div>
+          <div class="form-group"><label>City</label><input type="text" id="p_city" /></div>
+          <div class="form-group"><label>Postal Code</label><input type="text" id="p_postal" /></div>
+          <div class="form-group full"><label>Address</label><input type="text" id="p_address" /></div>
+        </div>
+        <button class="btn btn-primary" onclick="updateProfile()">Save Changes</button>
+        <h3 style="margin-top:2rem">Change Password</h3>
+        <div class="form-grid">
+          <div class="form-group full"><label>Current Password</label><input type="password" id="p_old_pass" placeholder="••••••••" /></div>
+          <div class="form-group"><label>New Password</label><input type="password" id="p_new_pass" placeholder="••••••••" /></div>
+          <div class="form-group"><label>Confirm New Password</label><input type="password" id="p_new_pass2" placeholder="••••••••" /></div>
+        </div>
+        <button class="btn btn-outline" onclick="changePassword()">Update Password</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN PANEL -->
+  <div id="page-admin-panel" class="page">
+    <div class="page-header"><h1>ADMIN PANEL</h1></div>
+    <div class="admin-tabs">
+      <button class="tab active" onclick="switchAdminTab('phones',this)">Phones</button>
+      <button class="tab" onclick="switchAdminTab('brands',this)">Brands</button>
+      <button class="tab" onclick="switchAdminTab('categories',this)">Categories</button>
+      <button class="tab" onclick="switchAdminTab('orders-admin',this)">Orders</button>
+    </div>
+    <div id="admin-phones" class="admin-tab-content active">
+      <div class="admin-toolbar">
+        <h3>Manage Phones</h3>
+        <button class="btn btn-primary" onclick="openAddPhone()">+ Add Phone</button>
+      </div>
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead><tr><th>Name</th><th>Brand</th><th>Price</th><th>Stock</th><th>Featured</th><th>Actions</th></tr></thead>
+          <tbody id="adminPhonesBody"></tbody>
+        </table>
+      </div>
+    </div>
+    <div id="admin-brands" class="admin-tab-content">
+      <div class="admin-toolbar">
+        <h3>Manage Brands</h3>
+        <button class="btn btn-primary" onclick="openAddBrand()">+ Add Brand</button>
+      </div>
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead><tr><th>Name</th><th>Slug</th><th>Phones</th><th>Actions</th></tr></thead>
+          <tbody id="adminBrandsBody"></tbody>
+        </table>
+      </div>
+    </div>
+    <div id="admin-categories" class="admin-tab-content">
+      <div class="admin-toolbar">
+        <h3>Manage Categories</h3>
+        <button class="btn btn-primary" onclick="openAddCategory()">+ Add Category</button>
+      </div>
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead><tr><th>Name</th><th>Slug</th><th>Phones</th><th>Actions</th></tr></thead>
+          <tbody id="adminCatsBody"></tbody>
+        </table>
+      </div>
+    </div>
+    <div id="admin-orders-admin" class="admin-tab-content">
+      <div class="admin-toolbar"><h3>All Orders</h3></div>
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead><tr><th>Order #</th><th>User</th><th>Total</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
+          <tbody id="adminOrdersBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODALS -->
+  <div class="modal-overlay" id="loginModal" onclick="closeModalOutside(event,'loginModal')">
+    <div class="modal">
+      <div class="modal-header"><h2>Welcome Back</h2><button class="modal-close" onclick="closeModal('loginModal')">✕</button></div>
+      <div class="form-group"><label>Username</label><input type="text" id="login_user" placeholder="your_username" /></div>
+      <div class="form-group"><label>Password</label><input type="password" id="login_pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')loginUser()" /></div>
+      <button class="btn btn-primary btn-full" onclick="loginUser()">Login</button>
+      <p class="modal-switch">Don't have an account? <a href="#" onclick="switchModal('loginModal','registerModal')">Register</a></p>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="registerModal" onclick="closeModalOutside(event,'registerModal')">
+    <div class="modal">
+      <div class="modal-header"><h2>Create Account</h2><button class="modal-close" onclick="closeModal('registerModal')">✕</button></div>
+      <div class="form-grid">
+        <div class="form-group"><label>First Name</label><input type="text" id="reg_first" placeholder="Ali" /></div>
+        <div class="form-group"><label>Last Name</label><input type="text" id="reg_last" placeholder="Hassan" /></div>
+      </div>
+      <div class="form-group"><label>Username *</label><input type="text" id="reg_user" placeholder="ali_hassan" /></div>
+      <div class="form-group"><label>Email *</label><input type="email" id="reg_email" placeholder="ali@email.com" /></div>
+      <div class="form-group"><label>Password *</label><input type="password" id="reg_pass" placeholder="min 8 chars" /></div>
+      <div class="form-group"><label>Confirm Password *</label><input type="password" id="reg_pass2" placeholder="••••••••" /></div>
+      <button class="btn btn-primary btn-full" onclick="registerUser()">Create Account</button>
+      <p class="modal-switch">Already have an account? <a href="#" onclick="switchModal('registerModal','loginModal')">Login</a></p>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="addPhoneModal" onclick="closeModalOutside(event,'addPhoneModal')">
+    <div class="modal modal-lg">
+      <div class="modal-header"><h2 id="phoneModalTitle">Add New Phone</h2><button class="modal-close" onclick="closeModal('addPhoneModal')">✕</button></div>
+      <input type="hidden" id="editPhoneSlug" />
+      <div class="form-grid">
+        <div class="form-group"><label>Phone Name *</label><input type="text" id="ph_name" placeholder="Galaxy S24 Ultra" oninput="autoSlug('ph_name','ph_slug')" /></div>
+        <div class="form-group"><label>Slug *</label><input type="text" id="ph_slug" placeholder="galaxy-s24-ultra" /></div>
+        <div class="form-group"><label>Brand *</label><select id="ph_brand"></select></div>
+        <div class="form-group"><label>Category</label><select id="ph_category"><option value="">-- None --</option></select></div>
+        <div class="form-group"><label>Price (PKR) *</label><input type="number" id="ph_price" placeholder="85000" /></div>
+        <div class="form-group"><label>Discount Price</label><input type="number" id="ph_discount" placeholder="Optional" /></div>
+        <div class="form-group"><label>Stock *</label><input type="number" id="ph_stock" placeholder="50" /></div>
+        <div class="form-group"><label>Condition</label><select id="ph_condition"><option value="new">New</option><option value="refurbished">Refurbished</option><option value="used">Used</option></select></div>
+        <div class="form-group"><label>RAM</label><input type="text" id="ph_ram" placeholder="12GB" /></div>
+        <div class="form-group"><label>Storage</label><input type="text" id="ph_storage" placeholder="256GB" /></div>
+        <div class="form-group"><label>Battery</label><input type="text" id="ph_battery" placeholder="5000mAh" /></div>
+        <div class="form-group"><label>Display</label><input type="text" id="ph_display" placeholder="6.8 inch" /></div>
+        <div class="form-group"><label>Camera</label><input type="text" id="ph_camera" placeholder="200MP" /></div>
+        <div class="form-group"><label>Processor</label><input type="text" id="ph_processor" placeholder="Snapdragon 8 Gen 3" /></div>
+        <div class="form-group"><label>OS</label><input type="text" id="ph_os" placeholder="Android 14" /></div>
+        <div class="form-group"><label>Color</label><input type="text" id="ph_color" placeholder="Phantom Black" /></div>
+        <div class="form-group full"><label>Description *</label><textarea id="ph_desc" rows="3" placeholder="Describe this phone..."></textarea></div>
+        <div class="form-group full"><label>Image URL</label><input type="url" id="ph_image_url" placeholder="https://example.com/image.jpg" /></div>
+        <div class="form-group"><label class="toggle-label"><input type="checkbox" id="ph_featured" /><span>Featured</span></label></div>
+        <div class="form-group"><label class="toggle-label"><input type="checkbox" id="ph_active" checked /><span>Active</span></label></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeModal('addPhoneModal')">Cancel</button>
+        <button class="btn btn-primary" onclick="savePhone()">Save Phone</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="addBrandModal" onclick="closeModalOutside(event,'addBrandModal')">
+    <div class="modal">
+      <div class="modal-header"><h2 id="brandModalTitle">Add Brand</h2><button class="modal-close" onclick="closeModal('addBrandModal')">✕</button></div>
+      <input type="hidden" id="editBrandSlug" />
+      <div class="form-group"><label>Brand Name *</label><input type="text" id="br_name" placeholder="Samsung" oninput="autoSlug('br_name','br_slug')" /></div>
+      <div class="form-group"><label>Slug *</label><input type="text" id="br_slug" placeholder="samsung" /></div>
+      <div class="form-group"><label>Description</label><textarea id="br_desc" rows="2" placeholder="About this brand..."></textarea></div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeModal('addBrandModal')">Cancel</button>
+        <button class="btn btn-primary" onclick="saveBrand()">Save Brand</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="addCategoryModal" onclick="closeModalOutside(event,'addCategoryModal')">
+    <div class="modal">
+      <div class="modal-header"><h2 id="catModalTitle">Add Category</h2><button class="modal-close" onclick="closeModal('addCategoryModal')">✕</button></div>
+      <input type="hidden" id="editCatSlug" />
+      <div class="form-group"><label>Category Name *</label><input type="text" id="cat_name" placeholder="Smartphones" oninput="autoSlug('cat_name','cat_slug')" /></div>
+      <div class="form-group"><label>Slug *</label><input type="text" id="cat_slug" placeholder="smartphones" /></div>
+      <div class="form-group"><label>Description</label><textarea id="cat_desc" rows="2" placeholder="About this category..."></textarea></div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeModal('addCategoryModal')">Cancel</button>
+        <button class="btn btn-primary" onclick="saveCategory()">Save Category</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="reviewModal" onclick="closeModalOutside(event,'reviewModal')">
+    <div class="modal">
+      <div class="modal-header"><h2>Write a Review</h2><button class="modal-close" onclick="closeModal('reviewModal')">✕</button></div>
+      <input type="hidden" id="reviewPhoneId" />
+      <div class="form-group">
+        <label>Rating *</label>
+        <div class="star-picker" id="starPicker">
+          <span data-val="1" onclick="setRating(1)">★</span>
+          <span data-val="2" onclick="setRating(2)">★</span>
+          <span data-val="3" onclick="setRating(3)">★</span>
+          <span data-val="4" onclick="setRating(4)">★</span>
+          <span data-val="5" onclick="setRating(5)">★</span>
+        </div>
+        <input type="hidden" id="reviewRating" value="0" />
+      </div>
+      <div class="form-group"><label>Title *</label><input type="text" id="reviewTitle" placeholder="Great phone!" /></div>
+      <div class="form-group"><label>Comment *</label><textarea id="reviewComment" rows="4" placeholder="Your detailed review..."></textarea></div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeModal('reviewModal')">Cancel</button>
+        <button class="btn btn-primary" onclick="submitReview()">Submit Review</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="confirmModal" onclick="closeModalOutside(event,'confirmModal')">
+    <div class="modal modal-sm">
+      <div class="modal-header"><h2>Confirm Delete</h2><button class="modal-close" onclick="closeModal('confirmModal')">✕</button></div>
+      <p id="confirmMsg" style="margin-bottom:1.5rem;color:var(--text-muted)">Are you sure?</p>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeModal('confirmModal')">Cancel</button>
+        <button class="btn btn-danger" id="confirmOkBtn">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="orderDetailModal" onclick="closeModalOutside(event,'orderDetailModal')">
+    <div class="modal modal-lg">
+      <div class="modal-header"><h2 id="detailOrderNumber">Order #0</h2><button class="modal-close" onclick="closeModal('orderDetailModal')">✕</button></div>
+      <div id="orderDetailContent"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
