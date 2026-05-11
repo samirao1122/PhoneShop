@@ -64,7 +64,12 @@ async function apiFetch(endpoint, options = {}) {
   } catch(err) {
     if (err.data) throw err;
     console.error('Network error:', err);
-    throw { status: 0, data: { detail: 'Network error. Is the Django server running?' } };
+    throw {
+      status: 0,
+      data: {
+        detail: `Network error connecting to ${API}. Ensure Django is running, the API URL is correct, and CORS/credentials are allowed.`
+      }
+    };
   }
 }
 function getError(err) {

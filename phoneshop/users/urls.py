@@ -6,6 +6,7 @@ urlpatterns = [
     # Auth
     path('login/', views.login_view, name='login'),
     path('csrf/', views.csrf_token, name='csrf_token'),
+    # path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     # path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     # User management
     path('register/', views.register, name='register'),

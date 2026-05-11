@@ -2,7 +2,7 @@ from rest_framework import status, generics
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout as auth_logout
 from django.contrib.auth.models import User
 from django.middleware.csrf import get_token
 from .serializers import (
@@ -92,7 +92,7 @@ def change_password(request):
 @permission_classes([AllowAny])
 def logout(request):
     """POST /api/auth/logout/ — logout user with session"""
-    logout(request)
+    auth_logout(request)
     return Response({'message': 'Logged out successfully'})
 
 
